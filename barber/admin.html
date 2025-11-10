@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Area Barber - Gestione Appuntamenti</title>
-    <link rel="stylesheet" href="Static/Css/style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
+
 <body>
     <header>
         <h1>Gestione Appuntamenti 💼</h1>
@@ -24,14 +26,13 @@
             <table id="tabella">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Servizio</th>
-                        <th>Data</th>
-                        <th>Ora</th>
-                        <th>Azioni</th>
+                        <p>Nome</p>
+                        <p>Servizio</p>
+                        <p>Data</p>
+                        <p>Ora</p>
+                        <p>Azioni</p>
                     </tr>
                 </thead>
-                <tbody></tbody>
             </table>
             <div class="admin-controls">
                 <button id="svuota">🗑️ Cancella tutti</button>
@@ -41,88 +42,87 @@
     </main>
 
     <script>
-        // admin.js
-const loginBtn = document.querySelector('#loginBtn');
-const passwordInput = document.querySelector('#password');
-const loginMessaggio = document.querySelector('#loginMessaggio');
-const adminArea = document.querySelector('#adminArea');
-const loginArea = document.querySelector('#loginArea');
-const tabellaBody = document.querySelector('#tabella tbody');
-const svuotaBtn = document.querySelector('#svuota');
+        const loginBtn = document.querySelector('#loginBtn');
+        const passwordInput = document.querySelector('#password');
+        const loginMessaggio = document.querySelector('#loginMessaggio');
+        const adminArea = document.querySelector('#adminArea');
+        const loginArea = document.querySelector('#loginArea');
+        const tabellaBody = document.querySelector('#tabella tbody');
+        const svuotaBtn = document.querySelector('#svuota');
 
-// Password esempio (attenzione: solo per uso locale/demo)
-const PASSWORD = "barbiere123";
+        const PASSWORD = "barber123";
 
-loginBtn.addEventListener('click', () => {
-    if (passwordInput.value === PASSWORD) {
-        loginArea.style.display = 'none';
-        adminArea.style.display = 'block';
-        mostraPrenotazioni();
-    } else {
-        loginMessaggio.textContent = "❌ Password errata";
-        loginMessaggio.style.color = "salmon";
-    }
-});
+        loginBtn.addEventListener('click', () => {
+            if (passwordInput.value === PASSWORD) {
+                loginArea.style.display = 'none';
+                adminArea.style.display = 'block';
+                mostraPrenotazioni();
+            } else {
+                loginMessaggio.textContent = "❌ Password errata";
+                loginMessaggio.style.color = "salmon";
+            }
+        });
 
-function mostraPrenotazioni() {
-    let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
-    tabellaBody.innerHTML = "";
+        function mostraPrenotazioni() {
+            let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
+            tabellaBody.innerHTML = "";
 
-    if (prenotazioni.length === 0) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="5" style="text-align:center; padding:20px;">Nessuna prenotazione</td>`;
-        tabellaBody.appendChild(tr);
-        return;
-    }
+            if (prenotazioni.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="5" style="text-align:center; padding:20px;">Nessuna prenotazione</td>`;
+                tabellaBody.appendChild(tr);
+                return;
+            }
 
-    prenotazioni.forEach(p => {
-        const tr = document.createElement('tr');
+            prenotazioni.forEach(p => {
+                const tr = document.createElement('tr');
 
-        // riga con bottone elimina singolo
-        tr.innerHTML = `
+                // riga con bottone elimina singolo
+                tr.innerHTML = `
             <td>${escapeHtml(p.nome)}</td>
             <td>${escapeHtml(p.servizio)}</td>
             <td>${escapeHtml(p.data)}</td>
             <td>${escapeHtml(p.ora)}</td>
             <td><button class="elimina" data-id="${p.id}">Elimina</button></td>
         `;
-        tabellaBody.appendChild(tr);
-    });
+                tabellaBody.appendChild(tr);
+            });
 
-    // aggiungo listener per eliminare singoli
-    document.querySelectorAll('.elimina').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = Number(btn.dataset.id);
-            eliminaPrenotazione(id);
+            // aggiungo listener per eliminare singoli
+            document.querySelectorAll('.elimina').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = Number(btn.dataset.id);
+                    eliminaPrenotazione(id);
+                });
+            });
+        }
+
+        function eliminaPrenotazione(id) {
+            let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
+            prenotazioni = prenotazioni.filter(p => p.id !== id);
+            localStorage.setItem('prenotazioni', JSON.stringify(prenotazioni));
+            mostraPrenotazioni();
+        }
+
+        svuotaBtn.addEventListener('click', () => {
+            if (confirm("Vuoi davvero cancellare tutte le prenotazioni?")) {
+                localStorage.removeItem('prenotazioni');
+                mostraPrenotazioni();
+            }
         });
-    });
-}
 
-function eliminaPrenotazione(id) {
-    let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
-    prenotazioni = prenotazioni.filter(p => p.id !== id);
-    localStorage.setItem('prenotazioni', JSON.stringify(prenotazioni));
-    mostraPrenotazioni();
-}
-
-svuotaBtn.addEventListener('click', () => {
-    if (confirm("Vuoi davvero cancellare tutte le prenotazioni?")) {
-        localStorage.removeItem('prenotazioni');
-        mostraPrenotazioni();
-    }
-});
-
-// semplice funzione per evitare inserimenti HTML pericolosi
-function escapeHtml(text) {
-    if (!text && text !== 0) return '';
-    return String(text)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-}
+        // semplice funzione per evitare inserimenti HTML pericolosi
+        function escapeHtml(text) {
+            if (!text && text !== 0) return '';
+            return String(text)
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#039;');
+        }
 
     </script>
 </body>
+
 </html>

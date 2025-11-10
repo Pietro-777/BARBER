@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prenota - Barber Shop</title>
-    <link rel="stylesheet" href="Static/Css/style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
+
 <body>
     <header>
         <h1>Barber Shop 💈</h1>
@@ -20,8 +22,8 @@
 
                 <label for="servizio">Servizio</label>
                 <select id="servizio">
-                    <option value="Taglio">Taglio Uomo</option>
-                    <option value="Rasatura">Rasatura Barba</option>
+                    <option value="Taglio">Taglio 10€</option>
+                    <option value="Rasatura">Taglio Baraba 15€</option>
                     <option value="Trattamento">Trattamento Capelli</option>
                 </select>
 
@@ -29,7 +31,7 @@
                 <input type="date" id="data" required>
 
                 <label for="ora">Ora</label>
-                <input type="time" id="ora" required>
+                <select id="ora" required></select>
 
                 <button type="submit">Prenota</button>
             </form>
@@ -46,37 +48,52 @@
         const form = document.querySelector('#formPrenotazione');
         const messaggio = document.querySelector('#messaggio');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+        // Genera orari ogni 30 minuti (dalle 09:00 alle 18:00)
+        const selectOra = document.querySelector('#ora');
+        for (let ora = 9; ora <= 19; ora++) {
+            for (let min = 0; min < 60; min += 30) {
+                const hh = String(ora).padStart(2, '0');
+                const mm = String(min).padStart(2, '0');
+                const option = document.createElement('option');
+                option.value = `${hh}:${mm}`;
+                option.textContent = `${hh}:${mm}`;
+                selectOra.appendChild(option);
+            }
+        }
 
-    const nome = document.querySelector('#nome').value.trim();
-    const servizio = document.querySelector('#servizio').value;
-    const data = document.querySelector('#data').value;
-    const ora = document.querySelector('#ora').value;
 
-    if (!nome || !data || !ora) {
-        messaggio.textContent = "Compila tutti i campi.";
-        messaggio.style.color = "salmon";
-        return;
-    }
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-    const prenotazione = {
-        id: Date.now(), // id unico
-        nome,
-        servizio,
-        data,
-        ora
-    };
+            const nome = document.querySelector('#nome').value.trim();
+            const servizio = document.querySelector('#servizio').value;
+            const data = document.querySelector('#data').value;
+            const ora = document.querySelector('#ora').value;
 
-    let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
-    prenotazioni.push(prenotazione);
-    localStorage.setItem('prenotazioni', JSON.stringify(prenotazioni));
+            if (!nome || !data || !ora) {
+                messaggio.textContent = "Compila tutti i campi.";
+                messaggio.style.color = "salmon";
+                return;
+            }
 
-    messaggio.textContent = "✅ Appuntamento prenotato con successo!";
-    messaggio.style.color = "#a6e6a6";
-    form.reset();
-});
+            const prenotazione = {
+                id: Date.now(), // id unico
+                nome,
+                servizio,
+                data,
+                ora
+            };
+
+            let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
+            prenotazioni.push(prenotazione);
+            localStorage.setItem('prenotazioni', JSON.stringify(prenotazioni));
+
+            messaggio.textContent = "✅ Appuntamento prenotato con successo!";
+            messaggio.style.color = "#a6e6a6";
+            form.reset();
+        });
 
     </script>
 </body>
+
 </html>

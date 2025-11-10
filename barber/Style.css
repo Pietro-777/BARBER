@@ -1,5 +1,8 @@
 /* style.css */
-* { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 body {
     margin: 0;
@@ -16,12 +19,23 @@ header {
     border-bottom: 4px solid #c29b48;
 }
 
-h1 { margin: 0; color: #c29b48; }
-h2 { color: #f5f5f5; }
+h1 {
+    margin: 0;
+    color: #c29b48;
+}
 
-main { padding: 20px; max-width: 900px; margin: 0 auto; }
+h2 {
+    color: #f5f5f5;
+}
 
-.booking, .links {
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.booking,
+.links {
     background: #161616;
     padding: 20px;
     border-radius: 8px;
@@ -29,7 +43,12 @@ main { padding: 20px; max-width: 900px; margin: 0 auto; }
     border: 1px solid #222;
 }
 
-label { display:block; margin-top:10px; font-weight:600; }
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
 input[type="text"],
 input[type="date"],
 input[type="time"],
@@ -67,7 +86,8 @@ table#tabella {
 table#tabella th,
 table#tabella td {
     padding: 10px;
-    border: 1px solid #2a2a2a; /* bordo controllato SOLO da CSS */
+    border: 1px solid #2a2a2a;
+    /* bordo controllato SOLO da CSS */
     text-align: left;
 }
 
@@ -79,12 +99,22 @@ table#tabella th {
 /* link e controlli admin */
 .admin-controls {
     margin-top: 12px;
-    display:flex;
+    display: flex;
     gap: 12px;
-    align-items:center;
+    align-items: center;
 }
 
-a { color: #c29b48; text-decoration: none; }
-a:hover { text-decoration: underline; }
+a {
+    color: #c29b48;
+    text-decoration: none;
+}
 
-#messaggio, #loginMessaggio { margin-top: 12px; color: #a6e6a6; }
+a:hover {
+    text-decoration: underline;
+}
+
+#messaggio,
+#loginMessaggio {
+    margin-top: 12px;
+    color: #a6e6a6;
+}
