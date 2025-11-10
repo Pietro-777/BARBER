@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Prenota - Barber Shop</title>
+    <link rel="stylesheet" href="Static/Css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Barber Shop 💈</h1>
+    </header>
+
+    <main>
+        <section class="booking">
+            <h2>Prenota un appuntamento</h2>
+            <form id="formPrenotazione">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" required>
+
+                <label for="servizio">Servizio</label>
+                <select id="servizio">
+                    <option value="Taglio">Taglio Uomo</option>
+                    <option value="Rasatura">Rasatura Barba</option>
+                    <option value="Trattamento">Trattamento Capelli</option>
+                </select>
+
+                <label for="data">Data</label>
+                <input type="date" id="data" required>
+
+                <label for="ora">Ora</label>
+                <input type="time" id="ora" required>
+
+                <button type="submit">Prenota</button>
+            </form>
+
+            <p id="messaggio"></p>
+        </section>
+
+        <section class="links">
+            <p>Se sei il barbiere: <a href="admin.html">Area Barbiere (login)</a></p>
+        </section>
+    </main>
+
+    <script>
+        const form = document.querySelector('#formPrenotazione');
+        const messaggio = document.querySelector('#messaggio');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const nome = document.querySelector('#nome').value.trim();
+    const servizio = document.querySelector('#servizio').value;
+    const data = document.querySelector('#data').value;
+    const ora = document.querySelector('#ora').value;
+
+    if (!nome || !data || !ora) {
+        messaggio.textContent = "Compila tutti i campi.";
+        messaggio.style.color = "salmon";
+        return;
+    }
+
+    const prenotazione = {
+        id: Date.now(), // id unico
+        nome,
+        servizio,
+        data,
+        ora
+    };
+
+    let prenotazioni = JSON.parse(localStorage.getItem('prenotazioni')) || [];
+    prenotazioni.push(prenotazione);
+    localStorage.setItem('prenotazioni', JSON.stringify(prenotazioni));
+
+    messaggio.textContent = "✅ Appuntamento prenotato con successo!";
+    messaggio.style.color = "#a6e6a6";
+    form.reset();
+});
+
+    </script>
+</body>
+</html>
