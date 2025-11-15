@@ -41,22 +41,61 @@ body {
   width: 100%;
   height: 85vh;
   /* più alto, perfetto per una foto verticale */
-  background: url('/SRC/IMG/IMG_7298.jpg') center top no-repeat;
-  background-size: contain;
-  /* non taglia la foto */
-  background-color: #000;
-  /* riempie lo spazio nero ai lati */
-
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  /* testo in basso: più bello con foto verticale */
-  align-items: center;
-  padding-bottom: 50px;
-  /* spazio per titolo e bottone */
-
-  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4);
+  justify-content: space-between;
+  /* distribuisce le immagini a sinistra, centro, destra */
+  align-items: flex-end;
+  position: relative;
+  padding: 0 20px 50px 20px;
+  /* spazio in basso per testo */
+  background-color: #000;
+  /* riempie lo spazio nero */
 }
+
+.hero::before,
+.hero::after,
+.hero .center-bg {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 33.33%;
+  /* tre parti uguali */
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2);
+  /* overlay leggero */
+  z-index: 1;
+}
+
+/* Immagine sinistra */
+.hero::before {
+  left: 0;
+  background-image: url('/SRC/IMG/IMG_7298.jpg');
+}
+
+/* Immagine centrale */
+.hero .center-bg {
+  left: 33.33%;
+  background-image: url('/SRC/IMG/IMG_7299.jpg');
+}
+
+/* Immagine destra */
+.hero::after {
+  right: 0;
+  background-image: url('/SRC/IMG/IMG_7300.jpg');
+}
+
+/* Testo e bottone sopra le immagini */
+.hero .titolo,
+.hero .prenota {
+  position: relative;
+  z-index: 2;
+  /* sopra overlay */
+  color: #fff;
+  text-align: center;
+}
+
 
 
 .titolo {
@@ -127,4 +166,48 @@ a {
 
 a:hover {
   color: #ffeaad;
+}
+
+/* Testo e bottone centrati sopra le immagini */
+.hero .titolo,
+.hero .prenota {
+  position: absolute;
+  /* assoluto rispetto alla .hero */
+  left: 50%;
+  /* centro orizzontale */
+  transform: translateX(-50%);
+  /* sposta indietro di metà larghezza */
+  z-index: 2;
+  /* sopra le immagini */
+  color: #fff;
+  text-align: center;
+}
+
+/* Titolo */
+.titolo {
+  font-size: 40px;
+  text-shadow: 3px 3px 10px #000;
+  margin: 0 0 20px 0;
+  top: 60%;
+  /* puoi regolare la posizione verticale */
+}
+
+/* Bottone prenota */
+.prenota {
+  top: 75%;
+  /* sotto il titolo */
+  position: absolute;
+  /* necessario per il top */
+  background: #e5b25d;
+  color: #000;
+  padding: 12px 22px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  box-shadow: 0 0 10px #e5b25d;
+  transition: 0.3s ease;
+}
+
+.prenota:hover {
+  background: #ffcc6a;
 }
