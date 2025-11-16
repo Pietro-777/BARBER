@@ -71,19 +71,19 @@ body {
 /* Immagine sinistra */
 .hero::before {
   left: 0;
-  background-image: url('/SRC/IMG/IMG_7298.jpg');
+  background-image: url('SRC/IMG/IMG_7298.jpg');
 }
 
 /* Immagine centrale */
 .hero .center-bg {
   left: 33.33%;
-  background-image: url('/SRC/IMG/IMG_7299.jpg');
+  background-image: url('SRC/IMG/IMG_7299.jpg');
 }
 
 /* Immagine destra */
 .hero::after {
   right: 0;
-  background-image: url('/SRC/IMG/IMG_7300.jpg');
+  background-image: url('SRC/IMG/IMG_7300.jpg');
 }
 
 /* Testo e bottone sopra le immagini */
