@@ -1,3 +1,6 @@
+
+
+
 /* SFONDO GENERALE */
 body {
   background-color: #000;
@@ -71,19 +74,19 @@ body {
 /* Immagine sinistra */
 .hero::before {
   left: 0;
-  background-image: url('assets/IMG/IMG_7298.jpg');
+  background-image: url('');
 }
 
 /* Immagine centrale */
 .hero .center-bg {
   left: 33.33%;
-  background-image: url('assets/IMG/IMG_7299.jpg');
+  background-image: url('');
 }
 
 /* Immagine destra */
 .hero::after {
   right: 0;
-  background-image: url('assets/IMG/IMG_7298.jpg');
+  background-image: url('');
 }
 
 /* Testo e bottone sopra le immagini */
