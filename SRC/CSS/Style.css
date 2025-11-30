@@ -1,164 +1,231 @@
-/* SFONDO GENERALE */
+/* RESET E SFONDO GENERALE (Mantenuto) */
+:root {
+  --color-dark: #0a0a0a;
+  --color-black: #000;
+  --color-light: #fff;
+  --color-accent: #d6a54a; 
+  --header-height: 80px;
+}
+
 body {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--color-black);
+  color: var(--color-light);
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* HEADER */
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ffc975;
+}
+
+/* HEADER (Mantenuto per la visibilità del Login) */
 .header {
+  position: sticky;
+  top: 0;
   width: 100%;
-  padding: 20px 40px;
+  height: var(--header-height);
+  padding: 0 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #111;
-  border-bottom: 2px solid #ffffff20;
-  position: relative;
-  z-index: 1000; /* <--- IMPORTANTISSIMO, rimette visibile il Login */
+  background: var(--color-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 .logo {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: bold;
-  color: #fff;
+  letter-spacing: 1px;
 }
 
 .nav a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 25px;
-  font-size: 15px;
-  transition: 0.3s ease;
+  color: var(--color-light);
+  font-size: 16px;
+  margin-left: 30px;
+  padding: 5px 0;
+  position: relative;
 }
 
 .nav a:hover {
-  color: #e5b25d;
+  color: var(--color-accent);
 }
 
-/* HERO */
+
+/* HERO Section - Contenitore principale */
 .hero {
   width: 100%;
-  height: 85vh;
-  position: relative;
-  background-color: #000;
+  height: calc(100vh - var(--header-height)); 
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
-/* Immagini divise in 3 parti */
-.hero::before,
-.hero::after,
-.hero .center-bg {
-  content: '';
+/* Contenitore per le 3 immagini */
+.background-split {
   position: absolute;
   top: 0;
-  width: 33.33%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.25);
-  z-index: 1;
-}
-
-/* Immagine sinistra */
-.hero::before {
   left: 0;
-  background-image: url(''); /* METTI IMMAGINE */
+  width: 100%;
+  height: 100%;
+  z-index: 0; /* Lo mantiene dietro il testo */
+  display: flex; /* Mette le immagini affiancate */
 }
 
-/* Immagine centrale */
-.hero .center-bg {
-  left: 33.33%;
-  background-image: url(''); /* METTI IMMAGINE */
+/* Stile per ciascuna immagine */
+.hero .bg-img {
+  width: 33.333%;
+  height: 100%;
+  object-fit: cover; /* Assicura che l'immagine copra l'area senza distorsioni */
+  display: block;
+  /* Applichiamo un overlay scuro a ciascuna immagine per la leggibilità */
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4); 
 }
 
-/* Immagine destra */
-.hero::after {
-  right: 0;
-  background-image: url(''); /* METTI IMMAGINE */
-}
-
-/* TITOLI E BOTTONI NELLA HERO */
+/* TITOLI E BOTTONI - Devono essere sopra le immagini */
 .hero .titolo,
 .hero .prenota {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2; /* Appaiono sopra alle immagini */
+  position: relative; 
+  z-index: 1; /* Assicura che siano sopra le immagini di sfondo */
+  color: var(--color-light);
   text-align: center;
-  color: #fff;
 }
 
-/* Titolo */
 .titolo {
-  font-size: 40px;
-  text-shadow: 3px 3px 10px #000;
-  top: 55%; /* Regolabile */
-  margin: 0;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 8px var(--color-black); 
 }
 
-/* Bottone prenota */
 .prenota {
-  top: 70%;
-  background: #e5b25d;
-  color: #000;
-  padding: 12px 22px;
+  background: var(--color-accent);
+  color: var(--color-dark);
+  padding: 15px 30px;
   border-radius: 5px;
   border: none;
   font-weight: bold;
-  box-shadow: 0 0 10px #e5b25d;
-  transition: 0.3s ease;
+  font-size: 18px;
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
 }
 
 .prenota:hover {
-  background: #ffcc6a;
+  background: #ffc975;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
 }
 
-/* GRIGLIA IMMAGINI */
-.Griglia {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  margin-top: 3rem;
-  padding: 20px;
-}
-
-.TAGLIO {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.FOTO {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  transition: 0.3s ease;
-}
-
-.FOTO:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-}
-
+/* FOOTER (Mantenuto) */
 /* FOOTER */
 .footer {
   width: 100%;
   text-align: center;
-  padding: 20px 0;
-  margin-top: 4rem;
+  padding: 25px 0;
+  /* RIMUOVI O IMPOSTA A ZERO IL MARGINE SUPERIORE */
+  margin-top: 0; 
+  background-color: var(--color-dark);
   color: #888;
-  border-top: 2px solid #ffffff10;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
 }
 
-/* LINK GENERALI */
-a {
-  color: #ffd27f;
+/* Stili per il Modale (Finestra Pop-up) */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Sfondo semi-trasparente */
+    display: none; /* Inizialmente nascosto */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Molto alto per essere sopra tutto */
 }
 
-a:hover {
-  color: #ffeaad;
+.modal-content {
+    background-color: var(--color-dark);
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    color: var(--color-light);
+}
+
+.modal-content h2 {
+    color: var(--color-accent);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#reservation-form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#reservation-form input[type="text"],
+#reservation-form input[type="date"],
+#reservation-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: var(--color-light);
+    box-sizing: border-box;
+}
+
+#btn-conferma {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--color-accent);
+    color: var(--color-dark);
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#btn-conferma:hover {
+    background: #ffc975;
+}
+
+.chiudi-modal {
+    width: 100%;
+    margin-top: 10px;
+    background: transparent;
+    color: #aaa;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.chiudi-modal:hover {
+    color: var(--color-light);
+    border-color: var(--color-light);
 }

@@ -6,9 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BarberDamiani</title>
   <link rel="stylesheet" href="SRC/CSS/Style.css">
-
-
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -22,38 +21,124 @@
   </header>
 
   <!-- HERO -->
-<section class="hero">
-  <div class="center-bg"></div>
-  <h1 class="titolo">BARBERDAMIANI</h1>
-  <button class="nes-btn is-warning prenota">PRENOTA ORA</button>
-</section>
-
-
-  <!-- TUO CODICE (GRIGLIA) -->
-  <div class="container">
-    <div class="Griglia">
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7271.jpg"></div>
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7277.jpg"></div>
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7278.jpg"></div>
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7273.jpg"></div>
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7274.jpg"></div>
-      <div class="TAGLIO"><img class="FOTO" src="SRC/IMG/IMG_7275.jpg"></div>
+  <div class="hero">
+    <div class="background-split">
+      <img src="SRC/IMG/IMG_7298.jpg" class="bg-img left" alt="">
+      <img src="SRC/IMG/IMG_7299.jpg" class="bg-img center" alt="">
+      <img src="SRC/IMG/IMG_7300.jpg" class="bg-img right" alt="">
     </div>
+
+    <h1 class="titolo">Titolo</h1>
+    <button id="btn-prenota" class="prenota">Prenota</button>
   </div>
 
+  <!-- MODALE PRENOTAZIONE -->
+  <div id="reservation-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Prenota il tuo Appuntamento</h2>
+
+      <form id="reservation-form">
+        <label>Nome:</label>
+        <input type="text" id="nome" required>
+
+        <label>Cognome:</label>
+        <input type="text" id="cognome" required>
+
+        <label>Giorno:</label>
+        <input type="date" id="giorno" required>
+
+        <label>Ora:</label>
+        <select id="ora" required></select>
+
+        <button type="submit" id="btn-conferma">Conferma Prenotazione</button>
+      </form>
+
+      <button id="btn-chiudi-modal" class="chiudi-modal">Annulla</button>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
     © 2025 BarberDamiani – Tutti i diritti riservati.
   </footer>
 
-
-
-  <!-- JS -->
+  <!-- JS REALE E CORRETTO -->
   <script>
-    document.querySelector(".prenota").addEventListener("click", () => {
-      alert("Prenotazione non disponibile al momento 😄");
+    const btnPrenota = document.getElementById("btn-prenota");
+    const modal = document.getElementById("reservation-modal");
+    const btnChiudi = document.getElementById("btn-chiudi-modal");
+    const form = document.getElementById("reservation-form");
+    const inputGiorno = document.getElementById("giorno");
+    const selectOra = document.getElementById("ora");
+
+    let appuntamentiPrenotati = [];
+
+    function generaSlotOrari(apertura, chiusura) {
+      selectOra.innerHTML = '<option value="">Seleziona Ora</option>';
+      let current = new Date();
+      current.setHours(apertura, 0, 0, 0);
+
+      let end = new Date();
+      end.setHours(chiusura, 0, 0, 0);
+
+      while (current < end) {
+        const ora = current.toTimeString().substring(0, 5);
+        const option = document.createElement("option");
+        option.value = ora;
+        option.textContent = ora;
+        selectOra.appendChild(option);
+        current.setMinutes(current.getMinutes() + 30);
+      }
+    }
+
+    function isOccupato(giorno, ora) {
+      const dataCompleta = `${giorno} ${ora}`;
+      return appuntamentiPrenotati.some(a => a.data === dataCompleta);
+    }
+
+    btnPrenota.addEventListener("click", () => {
+      inputGiorno.min = new Date().toISOString().split("T")[0];
+      generaSlotOrari(9, 18);
+      modal.style.display = "flex";
     });
+
+    btnChiudi.addEventListener("click", () => {
+      modal.style.display = "none";
+      form.reset();
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const nome = nome.value.trim();
+      const cognome = cognome.value.trim();
+      const giorno = inputGiorno.value;
+      const ora = selectOra.value;
+      const dataAppuntemento = `${giorno} ${ora}`;
+
+      if (!giorno || !ora) {
+        alert("Seleziona giorno e ora!");
+        return;
+      }
+
+      if (isOccupato(giorno, ora)) {
+        alert(`L'orario ${ora} del ${giorno} è già occupato.`);
+        return;
+      }
+
+      appuntamentiPrenotati.push({
+        nome,
+        cognome,
+        data: dataAppuntemento
+      });
+
+      alert(`Prenotazione confermata per ${nome} ${cognome} il ${giorno} alle ${ora}.`);
+
+      modal.style.display = "none";
+      form.reset();
+    });
+
+    generaSlotOrari(9, 18);
   </script>
 
 </body>
